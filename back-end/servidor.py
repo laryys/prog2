@@ -9,8 +9,10 @@ def inicio():
 @app.route("/listar_comidas")
 def listar_comidas():
     comidas = db.session.query(Comida).all()
-    comida_em_json = [ x.json() for x in comidas ]
-    resposta = jsonify(comida_em_json)
+    retorno = []
+    for i in comidas:
+        retorno.append(i.json())
+    resposta = jsonify(retorno)
     resposta.headers.add("Access-Control-Allow-Origin", "*")
     return resposta
 

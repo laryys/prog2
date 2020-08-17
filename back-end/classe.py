@@ -12,7 +12,7 @@ class Comida(db.Model):
     def __str__(self):
         return str(self.id)+", " + self.nome + ", " +\
             self.sabor + ", " + self.origem + ", " +\
-            self.preparo + ", " + str(self.nota)
+            self.dificuldade_de_preparo + ", " + str(self.nota)
 
     def json(self):
         return ({
@@ -20,6 +20,6 @@ class Comida(db.Model):
             "nome": self.nome,
             "sabor": self.sabor,
             "origem": self.origem,
-            "dificuldade de preparo": self.dificuldade_de_preparo,
+            "dificuldade_de_preparo": self.dificuldade_de_preparo,
             "nota": self.nota
         })
