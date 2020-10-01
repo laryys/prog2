@@ -16,4 +16,17 @@ def listar_comidas():
     resposta.headers.add("Access-Control-Allow-Origin", "*")
     return resposta
 
+@app.route("/incluir_comida", methods=['post'])
+def incluir_comida():
+    resposta = jsonify({"resultado": "ok", "detalhes": "ok"})
+    dados = request.get_json()
+    try:
+        nova = Comida(**dados)
+        db.session.add(nova)
+        db.session.commit()
+    except Exception as e: 
+        resposta = jsonify({"resultado":"erro", "detalhes":str(e)})
+    resposta.headers.add("Access-Control-Allow-Origin", "*")
+    return resposta
+
 app.run(debug=True)
