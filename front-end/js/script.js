@@ -15,12 +15,16 @@ $(function() {
             $('#corpoTabelaComidas').empty();
             mostrar_conteudo('TabelaComidas');
             for (var i in resposta) {
-                lin = '<tr>' +
+                lin = '<tr id="linha_'+resposta[i].id+'">' + 
                 '<td>' + resposta[i].nome + '</td>' + 
                 '<td>' + resposta[i].sabor + '</td>' + 
                 '<td>' + resposta[i].origem + '</td>' + 
                 '<td>' + resposta[i].dificuldade_de_preparo + '</td>' + 
                 '<td>' + resposta[i].nota + '</td>' + 
+                '<td><a href=# id="excluir_' + resposta[i].id + '" ' + 
+                  'class="excluir_comida"><img src="imagens/excluir.png" '+
+                  'alt="Excluir comida" title="Excluir comida" width=40px></a>' + 
+                '</td>' + 
                 '</tr>';
                 $('#corpoTabelaComidas').append(lin);
             }
@@ -89,4 +93,31 @@ $(function() {
     });
 
     mostrar_conteudo("conteudoInicial");
+
+
+    $(document).on("click", ".excluir_comida", function() {
+        var componente_clicado = $(this).attr('id'); 
+        var nome_icone = "excluir_";
+        var id_comida = componente_clicado.substring(nome_icone.length);
+        $.ajax({
+            url: 'http://localhost:5000/excluir_comida/'+id_comida,
+            type: 'DELETE', 
+            dataType: 'json', 
+            success: comidaExcluida, 
+            error: erroAoExcluir
+        });
+        function comidaExcluida (retorno) {
+            if (retorno.resultado == "ok") { 
+                $("#linha_" + id_comida).fadeOut(1000, function(){
+                    alert("Comida removida com sucesso!");
+                });
+            } else {
+                alert(retorno.resultado + ":" + retorno.detalhes);
+            }            
+        }
+        function erroAoExcluir (retorno) {
+            alert("erro ao excluir dados, verifique o backend: ");
+        }
+    });
+
 });

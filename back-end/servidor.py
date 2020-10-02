@@ -29,4 +29,15 @@ def incluir_comida():
     resposta.headers.add("Access-Control-Allow-Origin", "*")
     return resposta
 
+@app.route("/excluir_comida/<int:comida_id>", methods=['DELETE'])
+def excluir_comida(comida_id):
+    resposta = jsonify({"resultado": "ok", "detalhes": "ok"})
+    try:
+        Comida.query.filter(Comida.id == comida_id).delete()
+        db.session.commit()
+    except Exception as e:
+        resposta = jsonify({"resultado":"erro", "detalhes":str(e)})
+    resposta.headers.add("Access-Control-Allow-Origin", "*")
+    return resposta 
+
 app.run(debug=True)
