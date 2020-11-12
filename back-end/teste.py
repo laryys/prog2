@@ -30,11 +30,11 @@ if __name__ == "__main__":
     origem = "Brasil", dificuldade_de_preparo = "Difícil", 
     nota = 9, ranking_id = 5)
 
-    t1 = Titulo(nomeacao = "melhor do mundo", categoria = "massa", comida_id = 1)
-    t2 = Titulo(nomeacao = "melhor textura", categoria = "taco", comida_id = 2)
-    t3 = Titulo(nomeacao = "melhor sobremesa", categoria = "torta", comida_id = 3)
-    t4 = Titulo(nomeacao = "melhor sabor", categoria = "grãos", comida_id = 4)
-    t5 = Titulo(nomeacao = "melhor prato", categoria = "cerne", comida_id = 5)
+    t1 = Classificacao(titulo = "melhor do mundo", categoria = "massa", comida_id = 1)
+    t2 = Classificacao(titulo = "melhor textura", categoria = "taco", comida_id = 2)
+    t3 = Classificacao(titulo = "melhor sobremesa", categoria = "torta", comida_id = 3)
+    t4 = Classificacao(titulo = "melhor sabor", categoria = "grãos", comida_id = 4)
+    t5 = Classificacao(titulo = "melhor prato", categoria = "cerne", comida_id = 5)
 
     db.session.add(r1)
     db.session.add(r2)

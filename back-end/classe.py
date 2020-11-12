@@ -55,22 +55,22 @@ class Comida(db.Model):
                 "ranking": self.ranking.json()
             })
 
-class Titulo(db.Model):
+class Classificacao(db.Model):
 
     id = db.Column(db.Integer, primary_key=True) 
-    nomeacao = db.Column(db.String(254)) 
+    titulo = db.Column(db.String(254)) 
     categoria = db.Column(db.String(254))
     comida_id = db.Column(db.Integer, db.ForeignKey(Comida.id), nullable=False)
     comida = db.relationship("Comida")
 
     def __str__(self): 
-        return str(self.id)+", " + self.nomeacao + ", " +\
+        return str(self.id)+", " + self.titulo + ", " +\
             self.categoria
 
     def json(self):
         return ({
             "id": self.id,
-            "nomeacao": self.nomeacao,
+            "titulo": self.titulo,
             "categoria": self.categoria,
             "comida": self.comida.json()
         }) 
