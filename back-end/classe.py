@@ -29,7 +29,7 @@ class Classificacao(db.Model):
     titulo = db.Column(db.String(254)) 
     categoria = db.Column(db.String(254))
     data_classificacao = db.Column(db.String(254))
-    comida_id = db.Column(db.Integer, db.ForeignKey(Comida.id), nullable=False)
+    comida_id = db.Column(db.Integer, db.ForeignKey(Comida.id))
     comida = db.relationship("Comida")
 
     def __str__(self): 
