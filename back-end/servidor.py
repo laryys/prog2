@@ -1,5 +1,5 @@
 from config import *
-from classe import Comida
+from classe import Comida, Ranking, Classificacao 
 
 @app.route("/")
 def inicio():
@@ -39,5 +39,18 @@ def excluir_comida(comida_id):
         resposta = jsonify({"resultado":"erro", "detalhes":str(e)})
     resposta.headers.add("Access-Control-Allow-Origin", "*")
     return resposta 
+
+@app.route("/listar/<string:classe>")
+def listar(classe):
+    if classe == "Ranking":
+      dados = db.session.query(Ranking).all()
+    elif classe == "Comida":
+      dados = db.session.query(Comida).all()
+    elif classe == "Classificacao":
+      dados = db.session.query(Classificacao).all()
+    lista_jsons = [ x.json() for x in dados ]
+    resposta = jsonify(lista_jsons)
+    resposta.headers.add("Access-Control-Allow-Origin", "*")
+    return resposta
 
 app.run(debug=True)
