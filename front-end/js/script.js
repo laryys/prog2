@@ -1,6 +1,7 @@
 $(function() {
     
     function exibir_comidas() {
+        mostrar_conteudo('TabelaComidas')
         $.ajax({
             url: 'http://localhost:5000/listar_comidas',
             method: 'GET',
@@ -13,7 +14,7 @@ $(function() {
 
         function listar_comidas (resposta) {
             $('#corpoTabelaComidas').empty();
-            mostrar_conteudo('TabelaComidas');
+            mostrar_conteudo('cadastroComidas'); 
             for (var i in resposta) {
                 lin = '<tr id="linha_'+resposta[i].id+'">' + 
                 '<td>' + resposta[i].nome + '</td>' + 
@@ -32,7 +33,9 @@ $(function() {
     }
 
     function mostrar_conteudo(identificador) {
-        $("#TabelaComidas").addClass('invisible');
+        $("#cadastroComidas").addClass('invisible');
+        $("#cadastroRanking").addClass('invisible');
+        $("#cadastroClassificacao").addClass('invisible');
         $("#conteudoInicial").addClass('invisible');
         $("#"+identificador).removeClass('invisible');      
     }
@@ -87,7 +90,7 @@ $(function() {
     });
 
     $('#modalIncluirComidas').on('hide.bs.modal', function (e) {
-        if (! $("#TabelaComidas").hasClass('invisible')) {
+        if (! $("#cadastroComidas").hasClass('invisible')) {
             exibir_comidas();
         }
     });
@@ -118,6 +121,82 @@ $(function() {
         function erroAoExcluir (retorno) {
             alert("erro ao excluir dados, verifique o backend: ");
         }
+    });
+
+    function exibir_ranking() {
+        $.ajax({
+            url: 'http://localhost:5000/listar_ranking',
+            method: 'GET',
+            dataType: 'json', 
+            success: listar, 
+            error: function(problema) {
+                alert("erro ao ler dados, verifique o backend: ");
+            }
+        });
+
+        function listar (ranking) {
+            $('#corpoTabelaRanking').empty();
+            mostrar_conteudo("cadastroRanking");      
+            for (var i in ranking) { 
+                lin = '<tr id="linha_ranking_'+ranking[i].id+'">' + 
+                '<td>' + ranking[i].posicao + '</td>' + 
+                '<td>' + ranking[i].autor + '</td>' + 
+                // dados da comida
+                '<td>' + ranking[i].comida.nome + '</td>' + 
+                '<td>' + ranking[i].comida.sabor + '</td>' + 
+                '<td>' + ranking[i].comida.origem + '</td>' + 
+                '<td>' + ranking[i].comida.dificuldade_de_preparo + '</td>' + 
+                '<td>' + ranking[i].comida.nota + '</td>' + 
+                '<td><a href=# id="excluir_ranking_' + ranking[i].id + '" ' + 
+                    'class="excluir_ranking"><img src="imagens/excluir.png" '+
+                    'alt="Excluir ranking" title="Excluir ranking"  width=40px></a>' + 
+                '</td>' + 
+                '</tr>';
+                $('#corpoTabelaRanking').append(lin);
+            }
+        }
+    }
+
+    $(document).on("click", "#linkListarRanking", function() {
+        exibir_ranking();
+    });
+
+    function exibir_classificacao() {
+        $.ajax({
+            url: 'http://localhost:5000/listar_classificacao',
+            method: 'GET',
+            dataType: 'json', 
+            success: listar, 
+            error: function(problema) {
+                alert("erro ao ler dados, verifique o backend: ");
+            }
+        });
+        function listar (classificacao) {
+            $('#corpoTabelaClassificacao').empty();
+            mostrar_conteudo("cadastroClassificacao");      
+            for (var i in classificacao) { 
+                lin = '<tr id="linha_classificacao_'+classificacao[i].id+'">' + 
+                '<td>' + classificacao[i].titulo + '</td>' + 
+                '<td>' + classificacao[i].categoria + '</td>' + 
+                '<td>' + classificacao[i].data_classificacao + '</td>' + 
+                // dados da comida
+                '<td>' + classificacao[i].comida.nome + '</td>' + 
+                '<td>' + classificacao[i].comida.sabor + '</td>' + 
+                '<td>' + classificacao[i].comida.origem + '</td>' + 
+                '<td>' + classificacao[i].comida.dificuldade_de_preparo + '</td>' + 
+                '<td>' + classificacao[i].comida.nota + '</td>' + 
+                '<td><a href=# id="excluir_classificacao_' + classificacao[i].id + '" ' + 
+                    'class="excluir_classificacao"><img src="imagens/excluir.png" '+
+                    'alt="Excluir classificacao" title="Excluir classificacao"  width=40px></a>' + 
+                '</td>' + 
+                '</tr>';
+                $('#corpoTabelaClassificacao').append(lin);
+            }
+        }
+    }
+
+    $(document).on("click", "#linkListarClassificacao", function() {
+        exibir_classificacao();
     });
 
 });

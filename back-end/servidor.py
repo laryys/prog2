@@ -40,8 +40,25 @@ def excluir_comida(comida_id):
     resposta.headers.add("Access-Control-Allow-Origin", "*")
     return resposta 
 
+@app.route("/listar_ranking")
+def listar_ranking():
+    ranking = db.session.query(Ranking).all()
+    lista_jsons = [ x.json() for x in ranking ]
+    resposta = jsonify(lista_jsons)
+    resposta.headers.add("Access-Control-Allow-Origin", "*")
+    return resposta
+
+@app.route("/listar_classificacao")
+def listar_classificacao():
+    classificacao = db.session.query(Classificacao).all()
+    lista_jsons = [ x.json() for x in classificacao ]
+    resposta = jsonify(lista_jsons)
+    resposta.headers.add("Access-Control-Allow-Origin", "*")
+    return resposta
+
 @app.route("/listar/<string:classe>")
 def listar(classe):
+    dados = None
     if classe == "Ranking":
       dados = db.session.query(Ranking).all()
     elif classe == "Comida":
@@ -50,6 +67,32 @@ def listar(classe):
       dados = db.session.query(Classificacao).all()
     lista_jsons = [ x.json() for x in dados ]
     resposta = jsonify(lista_jsons)
+    resposta.headers.add("Access-Control-Allow-Origin", "*")
+    return resposta
+
+@app.route("/incluir_ranking", methods=['post'])
+def incluir_ranking():
+    resposta = jsonify({"resultado": "ok", "detalhes": "ok"})
+    dados = request.get_json()
+    try: 
+      nova = Ranking(**dados)
+      db.session.add(nova) 
+      db.session.commit() 
+    except Exception as e: 
+      resposta = jsonify({"resultado":"erro", "detalhes":str(e)})
+    resposta.headers.add("Access-Control-Allow-Origin", "*")
+    return resposta
+
+@app.route("/incluir_classificacao", methods=['post'])
+def incluir_classificacao():
+    resposta = jsonify({"resultado": "ok", "detalhes": "ok"})
+    dados = request.get_json()
+    try: 
+      nova = Classificacao(**dados)
+      db.session.add(nova) 
+      db.session.commit() 
+    except Exception as e: 
+      resposta = jsonify({"resultado":"erro", "detalhes":str(e)})
     resposta.headers.add("Access-Control-Allow-Origin", "*")
     return resposta
 

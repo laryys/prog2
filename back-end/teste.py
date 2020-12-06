@@ -24,11 +24,11 @@ if __name__ == "__main__":
     origem = "Brasil", dificuldade_de_preparo = "Difícil", 
     nota = 9)
 
-    t1 = Classificacao(titulo = "melhor do mundo",  data_classificacao = "23/01/2018", categoria = "massa", comida = c1)
-    t2 = Classificacao(titulo = "melhor textura", data_classificacao = "12/07/2018", categoria = "taco", comida = c2)
-    t3 = Classificacao(titulo = "melhor sobremesa", data_classificacao = "16/05/2018", categoria = "torta", comida = c3)
-    t4 = Classificacao(titulo = "melhor sabor", data_classificacao = "11/10/2019", categoria = "grãos", comida = c4)
-    t5 = Classificacao(titulo = "melhor prato", data_classificacao = "23/12/2019", categoria = "cerne", comida = c5)
+    t1 = Classificacao(titulo = "Melhor do mundo",  data_classificacao = "23.01.2018", categoria = "Massa", comida = c1)
+    t2 = Classificacao(titulo = "Melhor textura", data_classificacao = "12.07.2018", categoria = "Taco", comida = c2)
+    t3 = Classificacao(titulo = "Melhor sobremesa", data_classificacao = "16.05.2018", categoria = "Torta", comida = c3)
+    t4 = Classificacao(titulo = "Melhor sabor", data_classificacao = "11.10.2019", categoria = "Grãos", comida = c4)
+    t5 = Classificacao(titulo = "Melhor prato", data_classificacao = "23.12.2019", categoria = "Carne", comida = c5)
 
     r1 = Ranking(posicao = 1, autor = "Massimo Bottura", comida = c1)
     r2 = Ranking(posicao = 2, autor = "Jody Adams", comida = c3)
@@ -36,6 +36,7 @@ if __name__ == "__main__":
 
     db.session.add(c1)
     db.session.add(c3)
+    db.session.add(c4)
     db.session.add(c5)
 
     db.session.add(t1)
@@ -50,6 +51,7 @@ if __name__ == "__main__":
 
     print(c1.json())
     print(c3.json())
+    print(c4.json())
     print(c5.json())
 
     print(t1.json())
